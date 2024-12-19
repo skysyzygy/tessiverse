@@ -1,4 +1,4 @@
-import { type Handle, error } from '@sveltejs/kit';
+import { error, type Handle, redirect } from '@sveltejs/kit';
 import * as errors from "$lib/errors"
 
 export type ClientPrincipal = {
@@ -19,8 +19,12 @@ export const handle: Handle = async ({ event, resolve }) => {
     
     event.locals.user = user
     
-    if (!event.locals.user.userId) {
-        error(401, errors.AUTH)
+    if (! ("authenticated" in event.locals.user.userRoles)) {
+        if (!event.request.url.match(/\/login$/)) {
+            redirect(302, "/login")
+        } else {
+            error(401, errors.AUTH)
+        }
     }
 	const response = await resolve(event);
 	return response;

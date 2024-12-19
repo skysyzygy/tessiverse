@@ -16,7 +16,7 @@ function objectMap<I extends any,O extends any>(o: {[k: string]: I},f: (i: I) =>
 export const load: PageServerLoad = async ( { locals }) => {
     let backend = new Azure()
     let user = backend.load({identity: locals.user.userDetails})
-    let appData = objectMap(servers, (server: AppServer<any,any>) => user.then((user) => server.load(user))) as AppPromises
+    let appData = objectMap(servers, (server: AppServer<string,any,any>) => user.then((user) => server.load(user))) as AppPromises
     return {userData: user, appData: appData}
 }
 

@@ -5,7 +5,7 @@
 	import Github from "$lib/components/github.svelte";
 	import { ModeWatcher } from "mode-watcher";
 
-	let repo = "skysyzygy/tessiverse"
+	let repo = "brooklynacademyofmusic/tessiverse"
 	let { children } = $props();
 </script>
 
